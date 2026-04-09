@@ -3,6 +3,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 const images = [
   "/photo1.jpg",
@@ -65,7 +66,7 @@ export default function PhotoPage() {
     return () => window.removeEventListener("keydown", handleKey);
   }, [currentIndex]);
 
-  // Scroll logic
+  // Scroll
   useEffect(() => {
     const handleScroll = () => {
       const y = window.scrollY;
@@ -82,35 +83,22 @@ export default function PhotoPage() {
         darkMode ? "bg-black text-white" : "bg-white text-black"
       }`}
     >
+
       {/* NAVBAR */}
       <motion.div className="fixed top-6 left-0 right-0 z-50">
 
-        {/* TOP STATE */}
+        {/* TOP */}
         <AnimatePresence>
           {!showNavTitle && (
             <>
-              {/* LEFT */}
-              <motion.div
-                initial={{ opacity: 0, x: -40 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -40 }}
-                className="absolute left-6"
-              >
-                <div className="px-5 py-3 rounded-full border shadow-lg bg-[#0f0f0f] border-white/10">
-                  <button onClick={() => router.push("/")}>
-                    ← Back
-                  </button>
+              <motion.div className="absolute left-6">
+                <div className="px-5 py-3 rounded-full border bg-[#0f0f0f] border-white/10">
+                  <button onClick={() => router.push("/")}>← Back</button>
                 </div>
               </motion.div>
 
-              {/* RIGHT */}
-              <motion.div
-                initial={{ opacity: 0, x: 40 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: 40 }}
-                className="absolute right-6"
-              >
-                <div className="w-12 h-12 flex items-center justify-center rounded-full border shadow-lg bg-[#0f0f0f] border-white/10">
+              <motion.div className="absolute right-6">
+                <div className="w-12 h-12 flex items-center justify-center rounded-full border bg-[#0f0f0f] border-white/10">
                   <button onClick={() => setDarkMode(!darkMode)}>
                     {darkMode ? "☀️" : "🌙"}
                   </button>
@@ -120,23 +108,18 @@ export default function PhotoPage() {
           )}
         </AnimatePresence>
 
-        {/* MERGED NAVBAR */}
+        {/* MERGED */}
         <AnimatePresence>
           {showNavTitle && (
             <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9 }}
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
               className="flex justify-center"
             >
-              <div className="flex items-center justify-between w-[380px] px-5 py-3 rounded-full border shadow-lg bg-[#0f0f0f] border-white/10">
+              <div className="flex items-center justify-between w-[380px] px-5 py-3 rounded-full border bg-[#0f0f0f] border-white/10">
 
-                <button onClick={() => router.push("/")}>
-                  ← Back
-                </button>
-
-                <span className="font-semibold">Photography</span>
-
+                <button onClick={() => router.push("/")}>← Back</button>
+                <span>Photography</span>
                 <button onClick={() => setDarkMode(!darkMode)}>
                   {darkMode ? "☀️" : "🌙"}
                 </button>
@@ -145,18 +128,45 @@ export default function PhotoPage() {
             </motion.div>
           )}
         </AnimatePresence>
+
       </motion.div>
+
+      {/* HERO TITLE (FIX ADDED) */}
+      <div className="flex justify-center mb-10 mt-4">
+
+        <motion.h1
+          initial={{ opacity: 0, y: 40 }}
+          animate={{
+            opacity: showNavTitle ? 0 : 1,
+            scale: showNavTitle ? 0.9 : 1,
+            y: showNavTitle ? -30 : 0,
+          }}
+          transition={{ duration: 0.4 }}
+          className="text-4xl md:text-6xl font-bold"
+        >
+          Photography
+        </motion.h1>
+
+      </div>
 
       {/* GALLERY */}
       <div className="columns-1 sm:columns-2 md:columns-3 gap-6 space-y-6">
         {images.map((src, index) => (
-          <motion.img
+          <motion.div
             key={index}
-            src={src}
-            className="w-full rounded-xl cursor-pointer"
             whileHover={{ scale: 1.03 }}
             onClick={() => setCurrentIndex(index)}
-          />
+            className="cursor-pointer break-inside-avoid"
+          >
+            <Image
+              src={src}
+              alt="photo"
+              width={800}
+              height={600}
+              className="w-full h-auto rounded-xl"
+              sizes="(max-width: 768px) 100vw, 33vw"
+            />
+          </motion.div>
         ))}
       </div>
 
@@ -179,20 +189,33 @@ export default function PhotoPage() {
             className="fixed inset-0 bg-black/90 flex items-center justify-center z-50"
             onClick={close}
           >
-            <motion.img
-              src={images[currentIndex]}
-              className="max-w-[90%] max-h-[90%]"
+            <div
               onClick={(e) => e.stopPropagation()}
               onTouchStart={handleTouchStart}
               onTouchMove={handleTouchMove}
               onTouchEnd={handleTouchEnd}
-            />
+            >
+              <Image
+                src={images[currentIndex]}
+                alt="preview"
+                width={1200}
+                height={800}
+                className="max-w-[90%] max-h-[90%] rounded-lg"
+                priority
+              />
+            </div>
 
-            <button onClick={(e) => { e.stopPropagation(); prev(); }} className="absolute left-6">←</button>
-            <button onClick={(e) => { e.stopPropagation(); next(); }} className="absolute right-6">→</button>
+            <button onClick={(e) => { e.stopPropagation(); prev(); }} className="absolute left-6 text-2xl">
+              ←
+            </button>
+
+            <button onClick={(e) => { e.stopPropagation(); next(); }} className="absolute right-6 text-2xl">
+              →
+            </button>
           </motion.div>
         )}
       </AnimatePresence>
+
     </main>
   );
 }

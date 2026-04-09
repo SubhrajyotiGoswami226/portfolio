@@ -3,6 +3,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 const projects = [
   {
@@ -76,32 +77,19 @@ export default function DevPage() {
       {/* NAVBAR */}
       <motion.div className="fixed top-6 left-0 right-0 z-50">
 
-        {/* TOP STATE */}
         <AnimatePresence>
           {!showNavTitle && (
             <>
-              {/* LEFT */}
-              <motion.div
-                initial={{ opacity: 0, x: -40 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -40 }}
-                className="absolute left-6"
-              >
-                <div className="px-5 py-3 rounded-full border shadow-lg bg-[#0f0f0f] border-white/10">
+              <motion.div className="absolute left-6">
+                <div className="px-5 py-3 rounded-full border bg-[#0f0f0f] border-white/10">
                   <button onClick={() => router.push("/")}>
                     ← Back
                   </button>
                 </div>
               </motion.div>
 
-              {/* RIGHT */}
-              <motion.div
-                initial={{ opacity: 0, x: 40 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: 40 }}
-                className="absolute right-6"
-              >
-                <div className="w-12 h-12 flex items-center justify-center rounded-full border shadow-lg bg-[#0f0f0f] border-white/10">
+              <motion.div className="absolute right-6">
+                <div className="w-12 h-12 flex items-center justify-center rounded-full border bg-[#0f0f0f] border-white/10">
                   <button onClick={() => setDarkMode(!darkMode)}>
                     {darkMode ? "☀️" : "🌙"}
                   </button>
@@ -111,16 +99,10 @@ export default function DevPage() {
           )}
         </AnimatePresence>
 
-        {/* MERGED NAVBAR */}
         <AnimatePresence>
           {showNavTitle && (
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9 }}
-              className="flex justify-center"
-            >
-              <div className="flex items-center justify-between w-[380px] md:w-[440px] px-5 py-3 rounded-full border shadow-lg bg-[#0f0f0f] border-white/10">
+            <motion.div className="flex justify-center">
+              <div className="flex items-center justify-between w-[380px] md:w-[440px] px-5 py-3 rounded-full border bg-[#0f0f0f] border-white/10">
 
                 <button onClick={() => router.push("/")}>
                   ← Back
@@ -136,6 +118,7 @@ export default function DevPage() {
             </motion.div>
           )}
         </AnimatePresence>
+
       </motion.div>
 
       {/* HEADER */}
@@ -154,15 +137,17 @@ export default function DevPage() {
           <motion.div
             key={index}
             whileHover={{ scale: 1.03 }}
-            className="rounded-2xl overflow-hidden border bg-white/5 border-white/10 backdrop-blur-lg hover:border-white/20 transition"
+            className="rounded-2xl overflow-hidden border bg-white/5 border-white/10 backdrop-blur-lg hover:border-white/20 transition hover:shadow-[0_0_25px_rgba(255,255,255,0.08)]"
           >
 
             {/* IMAGE */}
-            <div className="h-48 overflow-hidden">
-              <img
+            <div className="relative w-full h-48 overflow-hidden">
+              <Image
                 src={project.image}
                 alt={project.title}
-                className="w-full h-full object-cover transition duration-500 hover:scale-110"
+                fill
+                className="object-cover transition duration-500 hover:scale-110"
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               />
             </div>
 
@@ -181,7 +166,7 @@ export default function DevPage() {
                 {project.description}
               </p>
 
-              {/* TECH STACK */}
+              {/* TECH */}
               <div className="mt-4 flex flex-wrap gap-2">
                 {project.tech.map((tech, i) => (
                   <span
