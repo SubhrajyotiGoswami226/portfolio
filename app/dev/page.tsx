@@ -86,7 +86,7 @@ export default function DevPage() {
 
   return (
     <main
-      className={`min-h-screen transition-colors duration-500 ${pageBg}`}
+      className={`snap-page min-h-screen transition-colors duration-500 ${pageBg}`}
     >
       {/* NAV */}
       <div className="fixed left-0 right-0 top-0 z-50 px-4 py-4 md:px-8">
@@ -117,7 +117,9 @@ export default function DevPage() {
           </span>
 
           <button
-            onClick={() => setDarkMode((value) => !value)}
+            onClick={() =>
+              setDarkMode((value) => !value)
+            }
             aria-label="Toggle theme"
             className={`flex h-9 w-9 items-center justify-center rounded-full border ${border}`}
           >
@@ -131,8 +133,8 @@ export default function DevPage() {
       </div>
 
       {/* HERO */}
-      <section className="px-5 pb-24 pt-36 md:px-8 md:pb-32 md:pt-48">
-        <div className="mx-auto max-w-7xl">
+      <section className="snap-section flex items-center px-5 pb-20 pt-32 md:px-8 md:pt-36">
+        <div className="mx-auto w-full max-w-7xl">
           <p
             className={`mb-6 text-xs uppercase tracking-[0.35em] ${muted}`}
           >
@@ -168,7 +170,7 @@ export default function DevPage() {
               className={`max-w-md pb-2 text-sm leading-7 ${muted}`}
             >
               A collection of web experiences, platforms and
-              interfaces I have built with a focus on usability,
+              interfaces built with a focus on usability,
               performance and visual identity.
             </p>
           </div>
@@ -176,120 +178,118 @@ export default function DevPage() {
       </section>
 
       {/* PROJECTS */}
-      <section className={`border-t ${border}`}>
-        <div className="mx-auto max-w-7xl">
-          {projects.map((project) => (
-            <motion.article
-              key={project.title}
-              initial={{
-                opacity: 0,
-                y: 30,
-              }}
-              whileInView={{
-                opacity: 1,
-                y: 0,
-              }}
-              viewport={{
-                once: true,
-                amount: 0.15,
-              }}
-              transition={{
-                duration: 0.6,
-              }}
-              className={`grid gap-8 border-b px-5 py-14 md:grid-cols-[110px_1fr_0.75fr] md:gap-10 md:px-8 md:py-20 ${border}`}
+      {projects.map((project) => (
+        <section
+          key={project.title}
+          className={`snap-section flex items-center border-t px-5 py-20 md:px-8 ${border}`}
+        >
+          <div className="mx-auto grid w-full max-w-7xl gap-8 md:grid-cols-[80px_1fr_0.75fr] md:gap-10">
+            <div
+              className={`pt-1 text-xs md:pt-2 ${muted}`}
             >
-              <div className={`text-xs ${muted}`}>
-                {project.number}
+              {project.number}
+            </div>
+
+            <div className="flex items-center">
+              <div className="relative aspect-[16/10] w-full overflow-hidden rounded-2xl">
+                <Image
+                  src={project.image}
+                  alt={project.title}
+                  fill
+                  className="object-cover transition duration-700 hover:scale-105"
+                  sizes="(max-width: 768px) 100vw, 55vw"
+                />
+
+                <div className="absolute inset-0 bg-black/5" />
               </div>
+            </div>
 
-              <div>
-                <div className="relative aspect-[16/10] overflow-hidden rounded-2xl">
-                  <Image
-                    src={project.image}
-                    alt={project.title}
-                    fill
-                    className="object-cover transition duration-700 hover:scale-105"
-                    sizes="(max-width: 768px) 100vw, 55vw"
-                  />
+            <div className="flex flex-col justify-center">
+              <p
+                className={`mb-2 text-xs uppercase tracking-[0.2em] ${muted}`}
+              >
+                Development project
+              </p>
 
-                  <div className="absolute inset-0 bg-black/5" />
-                </div>
-              </div>
+              <h2 className="text-4xl font-medium tracking-[-0.04em] md:text-5xl">
+                {project.title}
+              </h2>
 
-              <div className="flex flex-col justify-between">
-                <div>
-                  <h2 className="text-3xl font-medium tracking-[-0.04em] md:text-4xl">
-                    {project.title}
-                  </h2>
+              <p className={`mt-2 text-sm ${muted}`}>
+                {project.subtitle}
+              </p>
 
-                  <p className={`mt-2 text-sm ${muted}`}>
-                    {project.subtitle}
-                  </p>
+              <p
+                className={`mt-7 max-w-md text-sm leading-7 ${muted}`}
+              >
+                {project.description}
+              </p>
 
-                  <p className={`mt-7 text-sm leading-7 ${muted}`}>
-                    {project.description}
-                  </p>
-                </div>
-
-                <div className="mt-10">
-                  <div className="mb-7 flex flex-wrap gap-2">
-                    {project.tech.map((tech) => (
-                      <span
-                        key={tech}
-                        className={`rounded-full border px-3 py-1.5 text-[10px] uppercase tracking-[0.15em] ${border}`}
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-
-                  <a
-                    href={project.live}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group flex w-fit items-center gap-3 text-sm font-medium"
+              <div className="mt-8 flex flex-wrap gap-2">
+                {project.tech.map((tech) => (
+                  <span
+                    key={tech}
+                    className={`rounded-full border px-3 py-1.5 text-[10px] uppercase tracking-[0.15em] ${border}`}
                   >
-                    Visit live project
-
-                    <span
-                      className={`flex h-9 w-9 items-center justify-center rounded-full border transition group-hover:-translate-y-0.5 group-hover:translate-x-0.5 ${border}`}
-                    >
-                      <ArrowUpRight size={15} />
-                    </span>
-                  </a>
-                </div>
+                    {tech}
+                  </span>
+                ))}
               </div>
-            </motion.article>
-          ))}
-        </div>
-      </section>
+
+              <a
+                href={project.live}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group mt-8 flex w-fit items-center gap-3 text-sm font-medium"
+              >
+                Visit live project
+
+                <span
+                  className={`flex h-9 w-9 items-center justify-center rounded-full border transition group-hover:-translate-y-0.5 group-hover:translate-x-0.5 ${border}`}
+                >
+                  <ArrowUpRight size={15} />
+                </span>
+              </a>
+            </div>
+          </div>
+        </section>
+      ))}
 
       {/* FOOTER */}
-      <footer className="px-5 py-12 md:px-8">
-        <div className="mx-auto flex max-w-7xl items-center justify-between">
-          <button
-            onClick={() =>
-              window.scrollTo({
-                top: 0,
-                behavior: "smooth",
-              })
-            }
-            className={`text-xs uppercase tracking-[0.2em] ${muted}`}
-          >
-            Back to top ↑
-          </button>
+      <section
+        className={`snap-section flex items-center border-t px-5 py-16 md:px-8 ${border}`}
+      >
+        <div className="mx-auto w-full max-w-7xl">
+          <p className={`text-xs uppercase tracking-[0.3em] ${muted}`}>
+            06 / End
+          </p>
 
-          <a
-            href="https://github.com/SubhrajyotiGoswami226"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2 text-xs"
-          >
-            GitHub
-            <ArrowUpRight size={12} />
-          </a>
+          <div className="mt-8 flex flex-col justify-between gap-10 md:flex-row md:items-end">
+            <h2 className="max-w-4xl text-5xl font-medium leading-[0.95] tracking-[-0.055em] md:text-8xl">
+              More ideas.
+              <span className="block text-white/25">
+                More things to build.
+              </span>
+            </h2>
+
+            <button
+              onClick={() => router.push("/")}
+              className="group flex w-fit items-center gap-3 rounded-full bg-white px-5 py-3 text-sm font-semibold text-black"
+            >
+              Back to portfolio
+
+              <ArrowUpRight
+                size={16}
+                className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+              />
+            </button>
+          </div>
+
+          <div className="mt-16 border-t border-white/8 pt-5 text-[10px] uppercase tracking-[0.25em] text-white/20">
+            © {new Date().getFullYear()} Subhrajyoti Goswami
+          </div>
         </div>
-      </footer>
+      </section>
     </main>
   );
 }
