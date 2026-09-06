@@ -3,7 +3,6 @@
 :root {
   --background: #050505;
   --foreground: #f5f5f5;
-  --muted: #8a8a8a;
 }
 
 * {
@@ -11,26 +10,16 @@
 }
 
 html {
+  height: 100%;
   scroll-behavior: smooth;
-  scroll-padding-top: 90px;
   background: var(--background);
 }
 
 body {
+  height: 100%;
   margin: 0;
-  overflow-x: hidden;
-  background:
-    radial-gradient(
-      circle at 15% 15%,
-      rgba(255, 255, 255, 0.045),
-      transparent 28%
-    ),
-    radial-gradient(
-      circle at 85% 70%,
-      rgba(120, 120, 255, 0.035),
-      transparent 25%
-    ),
-    var(--background);
+  overflow: hidden;
+  background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
@@ -93,15 +82,39 @@ a {
   text-wrap: balance;
 }
 
-.snap-section {
-  min-height: 100svh;
-  scroll-snap-align: start;
+/* THE ACTUAL SCROLL CONTAINER */
+.snap-page {
+  height: 100dvh;
+  min-height: 100dvh;
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  scroll-behavior: smooth;
+  scroll-snap-type: y mandatory;
   scroll-snap-stop: always;
+
+  overscroll-behavior-y: contain;
+
+  -webkit-overflow-scrolling: touch;
 }
 
-.snap-page {
-  scroll-snap-type: y mandatory;
-  overscroll-behavior-y: contain;
+/* ONE SECTION = ONE VIEWPORT */
+.snap-section {
+  min-height: 100dvh;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  position: relative;
+}
+
+/* MOBILE FALLBACK */
+@media (max-width: 768px) {
+  .snap-page {
+    scroll-snap-type: y mandatory;
+  }
+
+  .snap-section {
+    min-height: 100svh;
+  }
 }
 
 .noise {

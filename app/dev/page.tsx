@@ -44,12 +44,12 @@ const projects = [
   },
   {
     number: "04",
-    title: "Artifex",
-    subtitle: "Museum Audio Guide",
+    title: "Assam Manuscript Archive",
+    subtitle: "Digital Preservation Platform",
     description:
-      "An immersive digital guide system enhancing museum experiences through audio storytelling.",
-    tech: ["Frontend", "UI/UX"],
-    live: "https://artifex-museum-companion.vercel.app/",
+      "A comprehensive platform for digitizing and preserving Assam's rich cultural heritage.",
+    tech: ["Next.js", "React", "Tailwind"],
+    live: "https://assammanuscriptarchive.com/",
     image: "/artifex.jpg",
   },
 ];
