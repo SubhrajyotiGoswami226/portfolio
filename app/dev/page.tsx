@@ -14,6 +14,26 @@ import Image from "next/image";
 const projects = [
   {
     number: "01",
+    title: "Assam Manuscript Archive",
+    subtitle: "Digital Preservation Platform",
+    description:
+      "A comprehensive platform for digitizing and preserving Assam's rich cultural heritage.",
+    tech: ["Next.js", "React", "Tailwind"],
+    live: "https://assammanuscriptarchive.com/",
+    image: "/artifex.jpg",
+  },
+  {
+    number: "02",
+    title: "Workout Tracker",
+    subtitle: "Daily Workout Tracking Platform",
+    description:
+      "A daily workout tracker designed to help users record, organize and stay consistent with their training.",
+    tech: ["Next.js", "React", "Tailwind"],
+    live: "https://workouttrackerforge.netlify.app/",
+    image: "/workout.jpg",
+  },
+  {
+    number: "03",
     title: "Zola Adventures",
     subtitle: "Bike, Scooty & Car Rental Platform",
     description:
@@ -23,7 +43,7 @@ const projects = [
     image: "/zola.jpg",
   },
   {
-    number: "02",
+    number: "04",
     title: "Orange Cabs",
     subtitle: "Cab Booking Website",
     description:
@@ -33,7 +53,7 @@ const projects = [
     image: "/orange.jpg",
   },
   {
-    number: "03",
+    number: "05",
     title: "Edify ERP",
     subtitle: "Educational Management System",
     description:
@@ -42,16 +62,7 @@ const projects = [
     live: "https://edify-erp-demo.vercel.app/",
     image: "/edify.jpg",
   },
-  {
-    number: "04",
-    title: "Assam Manuscript Archive",
-    subtitle: "Digital Preservation Platform",
-    description:
-      "A comprehensive platform for digitizing and preserving Assam's rich cultural heritage.",
-    tech: ["Next.js", "React", "Tailwind"],
-    live: "https://assammanuscriptarchive.com/",
-    image: "/artifex.jpg",
-  },
+
 ];
 
 export default function DevPage() {
@@ -261,7 +272,7 @@ export default function DevPage() {
       >
         <div className="mx-auto w-full max-w-7xl">
           <p className={`text-xs uppercase tracking-[0.3em] ${muted}`}>
-            06 / End
+            07 / End
           </p>
 
           <div className="mt-8 flex flex-col justify-between gap-10 md:flex-row md:items-end">
@@ -274,7 +285,7 @@ export default function DevPage() {
 
             <button
               onClick={() => router.push("/")}
-              className="group flex w-fit items-center gap-3 rounded-full bg-white px-5 py-3 text-sm font-semibold text-black"
+              className="group flex w-fit items-center gap-3 rounded-full bg-white px-5 py-3 text-sm font-semibold text-black transition hover:scale-[1.03]"
             >
               Back to portfolio
 
